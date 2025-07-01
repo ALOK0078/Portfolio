@@ -1,10 +1,10 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect ,FormEvent} from "react";
 import { Moon, Sun, Download, Mail, Github, Linkedin, Instagram, ExternalLink, Home, FolderOpen, Briefcase, Menu, X, ChevronDown, ChevronUp, InstagramIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { Badge } from "@/components/ui/badge";
+
 import { useToast } from "@/hooks/use-toast";
 import TypingEffect from "@/components/TypingEffect";
 
@@ -33,14 +33,61 @@ const Index = () => {
     }
     setMobileMenuOpen(false);
   };
-
-  const handleContactSubmit = (e: React.FormEvent) => {
+  const [status, setStatus] = useState<string>("");
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    toast({
-      title: "Message sent!",
-      description: "Thanks for reaching out. I'll get back to you within 24 hours.",
+    setStatus("Sending...");
+
+    const form = e.currentTarget;
+    const data = {
+      name: (form.elements.namedItem("name") as HTMLInputElement).value,
+      email: (form.elements.namedItem("email") as HTMLInputElement).value,
+      message: (form.elements.namedItem("message") as HTMLTextAreaElement).value,
+    };
+
+    const response = await fetch("https://formspree.io/f/xwpbyrze", {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json", // IMPORTANT!
+      },
+      body: JSON.stringify(data), // Send as JSON
     });
+
+    if (response.ok) {
+      setStatus("Thank you! Your message has been sent.");
+      form.reset();
+      toast({
+        title: "Message sent!",
+        description: "Thanks for reaching out. I'll get back to you within 24 hours.",
+      });
+    } else {
+      setStatus("Oops! Something went wrong. Please try again.");
+      toast({
+        title: "Something went wrong!",
+        description: "Please try again later.",
+        variant: "destructive",
+      });
+    }
   };
+  // const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+  //   e.preventDefault();
+  //   setStatus("Sending...");
+
+  //   const formData = new FormData(e.currentTarget);
+
+  //   const response = await fetch("https://formspree.io/f/xwpbyrze", {
+  //     method: "POST",
+  //     body: formData,
+  //     headers: {
+  //       Accept: "application/json",
+  //     },
+  //   });
+  //   toast({
+  //     title: "Message sent!",
+  //     description: "Thanks for reaching out. I'll get back to you within 24 hours.",
+  //   });
+  // };
 
 
 
@@ -1060,9 +1107,10 @@ const Index = () => {
               : 'bg-white border-gray-200'
           }`}>
             <CardContent className="p-6 sm:p-8">
-              <form onSubmit={handleContactSubmit} className="space-y-6">
+              <form onSubmit={handleSubmit} className="space-y-6">
                 <div>
                   <Input 
+                    name="name"
                     placeholder="Your Name" 
                     className={`h-12 transition-colors ${
                       isDark 
@@ -1074,6 +1122,7 @@ const Index = () => {
                 </div>
                 <div>
                   <Input 
+                    name="email"
                     type="email" 
                     placeholder="Your Email" 
                     className={`h-12 transition-colors ${
@@ -1086,6 +1135,7 @@ const Index = () => {
                 </div>
                 <div>
                   <Textarea 
+                  name="message"
                     placeholder="Your Message" 
                     rows={5}
                     className={`resize-none transition-colors ${
