@@ -1,4 +1,4 @@
-import { useState, useEffect ,FormEvent} from "react";
+import React, { useState, useEffect ,FormEvent} from "react";
 import { Moon, Sun, Download, Mail, Github, Linkedin, Instagram, ExternalLink, Home, FolderOpen, Briefcase, Menu, X, ChevronDown, ChevronUp, InstagramIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -135,7 +135,7 @@ const Index = () => {
         color: "from-orange-300 to-orange-500"
       },
     {
-      name: "TailWind CSS",
+      name: "TailWind",
       icon: (
         <img
           src="/icons/Tailwind.svg"
@@ -225,7 +225,7 @@ const Index = () => {
         name: "Next.js",
         icon: (
           <img
-            src="/icons/Next.js.svg"
+            src="/icons/nextjs2.svg"
             alt="Next.js icon"
             width={24}
             height={24}
@@ -251,6 +251,18 @@ const Index = () => {
         <img
           src="/icons/C++(CPlusPlus).svg"
           alt="C++ icon"
+          width={24}
+            height={24}
+          />
+        ),
+        color: "from-orange-300 to-orange-500"
+      },
+      {
+      name: "LangChain",
+      icon: (
+        <img
+          src="/icons/langchain-color.svg"
+          alt="LangChain icon"
           width={24}
             height={24}
           />
@@ -287,6 +299,18 @@ const Index = () => {
         <img
           src="/icons/PostgresSQL.svg"
           alt="PostgreSQL icon"
+          width={24}
+            height={24}
+          />
+        ),
+        color: "from-orange-300 to-orange-500"
+      },
+      {
+      name: "Jupyter",
+      icon: (
+        <img
+          src="/icons/Jupyter.svg"
+          alt="Jupyter icon"
           width={24}
             height={24}
           />
@@ -764,61 +788,79 @@ const Index = () => {
           </div>
           
           <div className="mb-8 overflow-hidden">
-            <div className="flex animate-[slide-right_20s_linear_infinite] gap-8">
-              {[...techStackRow1, ...techStackRow1].map((tech, index) => (
-                <div 
-                  key={`${tech.name}-${index}`}
-                  className={`flex-shrink-0 w-64 h-16 rounded-full flex items-center px-6 gap-4 transition-all duration-300 hover:scale-105 hover:shadow-lg cursor-pointer group ${
-                    isDark 
-                      ? 'bg-gray-800/60 border border-gray-700/50 hover:bg-gray-700/60' 
-                      : 'bg-white/90 border border-gray-300/50 hover:bg-gray-50'
-                  }`}
-                  style={{
-                    boxShadow: isDark 
-                      ? '0 0 5px rgba(6, 182, 212, 0.08), 0 0 10px rgba(59, 130, 246, 0.05)' 
-                      : '0 0 5px rgba(6, 182, 212, 0.05), 0 0 10px rgba(59, 130, 246, 0.03)'
-                  }}
-                >
-                  <div className="group-hover:scale-110 transition-transform duration-300">
-                    {tech.icon}
-                  </div>
-                  <span className={`text-lg font-medium ${
-                    isDark ? 'text-gray-200' : 'text-gray-800'
-                  }`}>
-                    {tech.name}
-                  </span>
-                </div>
-              ))}
-            </div>
+            <div 
+              className="flex gap-4 md:gap-8 animate-[slide-right_15s_linear_infinite] hover:animate-[slide-right_15s_linear_infinite_paused] md:animate-[slide-right_30s_linear_infinite] md:hover:animate-[slide-right_30s_linear_infinite_paused]"
+                style={{
+                  width: 'calc(200% + 2rem)', // Ensures smooth loop
+                    }}
+                  >
+                    {[...techStackRow1, ...techStackRow1].map((tech, index) => (
+                      <div 
+                        key={`${tech.name}-${index}`}
+                        className={`flex-shrink-0 w-32 h-10 md:w-48 md:h-12 rounded-full flex items-center px-3 md:px-6 gap-2 md:gap-4 transition-all duration-300 hover:scale-105 hover:shadow-lg cursor-pointer group ${
+                          isDark 
+                            ? 'bg-gray-800/60 border border-gray-700/50 hover:bg-gray-700/60' 
+                            : 'bg-white/90 border border-gray-300/50 hover:bg-gray-50'
+                        }`}
+                        style={{
+                          boxShadow: isDark 
+                            ? '0 0 5px rgba(6, 182, 212, 0.08), 0 0 10px rgba(59, 130, 246, 0.05)' 
+                            : '0 0 5px rgba(6, 182, 212, 0.05), 0 0 10px rgba(59, 130, 246, 0.03)'
+                        }}
+                      >
+                        <div className="group-hover:scale-110 transition-transform duration-300 flex-shrink-0">
+                          {React.cloneElement(tech.icon, {
+                            width: 16,
+                            height: 16,
+                            className: "md:w-6 md:h-6"
+                          })}
+                        </div>
+                        <span className={`text-sm md:text-lg font-medium truncate ${
+                          isDark ? 'text-gray-200' : 'text-gray-800'
+                        }`}>
+                          {tech.name}
+                        </span>
+                      </div>
+                    ))}
+              </div>
           </div>
 
           <div className="overflow-hidden">
-            <div className="flex animate-[slide-left_20s_linear_infinite] gap-8">
-              {[...techStackRow2, ...techStackRow2].map((tech, index) => (
-                <div 
-                  key={`${tech.name}-${index}`}
-                  className={`flex-shrink-0 w-64 h-16 rounded-full flex items-center px-6 gap-4 transition-all duration-300 hover:scale-105 hover:shadow-lg cursor-pointer group ${
-                    isDark 
-                      ? 'bg-gray-800/60 border border-gray-700/50 hover:bg-gray-700/60' 
-                      : 'bg-white/90 border border-gray-300/50 hover:bg-gray-50'
-                  }`}
-                  style={{
-                    boxShadow: isDark 
-                      ? '0 0 5px rgba(6, 182, 212, 0.08), 0 0 10px rgba(59, 130, 246, 0.05)' 
-                      : '0 0 5px rgba(6, 182, 212, 0.05), 0 0 10px rgba(59, 130, 246, 0.03)'
-                  }}
-                >
-                  <div className="group-hover:scale-110 transition-transform duration-300">
-                    {tech.icon}
-                  </div>
-                  <span className={`text-lg font-medium ${
-                    isDark ? 'text-gray-200' : 'text-gray-800'
-                  }`}>
-                    {tech.name}
-                  </span>
-                </div>
-              ))}
-            </div>
+             <div 
+              className="flex gap-4 md:gap-8 animate-[slide-left_15s_linear_infinite] hover:animate-[slide-left_15s_linear_infinite_paused] md:animate-[slide-left_30s_linear_infinite] md:hover:animate-[slide-left_30s_linear_infinite_paused]"
+                style={{
+                  width: 'calc(200% + 2rem)', // Ensures smooth loop
+                    }}
+                  >
+                    {[...techStackRow2, ...techStackRow2].map((tech, index) => (
+                      <div 
+                        key={`${tech.name}-${index}`}
+                        className={`flex-shrink-0 w-32 h-10 md:w-48 md:h-12 rounded-full flex items-center px-3 md:px-6 gap-2 md:gap-4 transition-all duration-300 hover:scale-105 hover:shadow-lg cursor-pointer group ${
+                          isDark 
+                            ? 'bg-gray-800/60 border border-gray-700/50 hover:bg-gray-700/60' 
+                            : 'bg-white/90 border border-gray-300/50 hover:bg-gray-50'
+                        }`}
+                        style={{
+                          boxShadow: isDark 
+                            ? '0 0 5px rgba(6, 182, 212, 0.08), 0 0 10px rgba(59, 130, 246, 0.05)' 
+                            : '0 0 5px rgba(6, 182, 212, 0.05), 0 0 10px rgba(59, 130, 246, 0.03)'
+                        }}
+                      >
+                        <div className="group-hover:scale-110 transition-transform duration-300 flex-shrink-0">
+                          {React.cloneElement(tech.icon, {
+                            width: 16,
+                            height: 16,
+                            className: "md:w-6 md:h-6"
+                          })}
+                        </div>
+                        <span className={`text-sm md:text-lg font-medium truncate ${
+                          isDark ? 'text-gray-200' : 'text-gray-800'
+                        }`}>
+                          {tech.name}
+                        </span>
+                      </div>
+                    ))}
+              </div>
           </div>
         </div>
       </section>
