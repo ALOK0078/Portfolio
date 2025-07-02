@@ -955,7 +955,7 @@ const Index = () => {
 
           <div className="text-center mt-12">
             <Button 
-              onClick={() => handleSocialClick('GitHub', 'https://github.com/alokkumar')}
+              onClick={() => handleSocialClick('GitHub', 'https://github.com/ALOK0078')}
               className="bg-gradient-to-r from-gray-700 to-gray-900 hover:from-gray-800 hover:to-black text-white px-8 py-3 text-lg font-semibold transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-gray-500/25"
             >
               <Github className="mr-2 h-5 w-5" />
